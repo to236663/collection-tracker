@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders the Collector\'s Notebook title', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent("Collector's Notebook");
+});
+
+test('renders the Add New Collection button', () => {
+  render(<App />);
+  expect(screen.getAllByText('Add New Collection').length).toBeGreaterThan(0);
 });

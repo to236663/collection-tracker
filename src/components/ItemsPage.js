@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './ItemsPage.module.css';
 
-const storageKey = (collectionId) => `collectorsNotebook_items_${collectionId}`;
-
-function ItemsPage({ collection, onBack, onCollectionUpdated }) {
+function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
+  const storageKey = `collectorsNotebook_items_${user.uid}_${collection.id}`;
   const [items, setItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -14,9 +13,9 @@ function ItemsPage({ collection, onBack, onCollectionUpdated }) {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(storageKey(collection.id));
+    const stored = localStorage.getItem(storageKey);
     if (stored) setItems(JSON.parse(stored));
-  }, [collection.id]);
+  }, [storageKey]);
 
   useEffect(() => {
     if (!openMenuId) return;
@@ -33,7 +32,7 @@ function ItemsPage({ collection, onBack, onCollectionUpdated }) {
   }, [showFilterMenu]);
 
   const saveToStorage = (data) => {
-    localStorage.setItem(storageKey(collection.id), JSON.stringify(data));
+    localStorage.setItem(storageKey, JSON.stringify(data));
   };
 
   const openAddModal = () => {

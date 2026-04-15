@@ -25,6 +25,13 @@
   letter-spacing: 0.5px;
 }
 
+/* ── Header Actions ── */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 /* ── Shared Button ── */
 .addButton {
   background-color: #4a9e58;
@@ -45,6 +52,26 @@
 
 .addButton:active {
   transform: scale(0.97);
+}
+
+/* ── Logout Button ── */
+.logoutButton {
+  background: none;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.logoutButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* ── Main Content ── */

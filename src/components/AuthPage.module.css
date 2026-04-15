@@ -1,0 +1,147 @@
+.page {
+  min-height: 100vh;
+  background-color: #a69171;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.appTitle {
+  margin: 0 0 0.25rem 0;
+  color: #1d4f1e;
+  font-size: 1.7rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.formTitle {
+  margin: 0 0 1rem 0;
+  color: #555;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  background: #fafafa;
+  color: #222;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #4a9e58;
+  background: #fff;
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper .input {
+  width: 100%;
+  padding-right: 4rem;
+}
+
+.revealButton {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #4a9e58;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.revealButton:hover {
+  color: #1d4f1e;
+}
+
+.error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.submitButton {
+  margin-top: 0.25rem;
+  padding: 0.75rem;
+  background-color: #1d4f1e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #2a6b2c;
+}
+
+.submitButton:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggle {
+  margin: 0.5rem 0 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  color: #4a9e58;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  text-decoration: underline;
+}
+
+.toggleButton:hover {
+  color: #1d4f1e;
+}

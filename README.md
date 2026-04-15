@@ -11,16 +11,17 @@ This tracker will be to for helping collectors be able to track they're own pers
 - Pin a Collection to the top of the Main Page
 - Check Items in Collections as Collected/Uncollected
 - Filter Items by Status in Item Pages
+- Sign Up, Login, and Logout of App
 
 ## Tech Stack
 
-This project will utilize React, JavaScript, CSS, localStorage, and Vercel for its front-end and back-end development and for its deployment. 
+This project will utilize React, JavaScript, CSS, localStorage, and Vercel for its front-end and back-end development and for its deployment, as well as Firebase for the handling of back-end user authentication. 
 
 ## Known Bugs
 There are no major bugs or limitations at the current state of this project. Overall there were mainly only minor bugs menu displays, specifically dropdown menus and the way they would interact with other items when toggled, but those were fixed and the app runs smoothly. 
 
 ## Setup Instructions
-To setup, you can either use the Vercel deployment link or you can clone the repository and run the React app locally by running "npm start" and typing in whatever port the app is running on in your browser. 
+To setup, you can either use the Vercel deployment link or you can clone the repository and run the React app locally by running "npm start" and typing in whatever port the app is running on in your browser. Make sure when deploying locally that your terminal is open in the correct folder before running the app.
 
 ## What I Learned
 I would say that probably the biggest thing I learned from this project was the amount of time and work that goes into planning the project before actually starting to code it. As I began to think through and process how I wanted to create this project and what I would need, I realized how much work and different details I had to keep track off before I even began asking Claude to start coding for me. Normally, I feel like I spend more time coding than actually planning out my code and project before starting, but with this project I had to spend the same if not more time mentally and physically organizing what I specifically wanted for this project and what I would need to ask from Claude in order to get the results I wanted, which in the end I would definitely say that I got them. 

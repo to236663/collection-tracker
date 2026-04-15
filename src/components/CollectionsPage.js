@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 import styles from './CollectionsPage.module.css';
 
-const STORAGE_KEY = 'collectorsNotebook_collections';
-
-function CollectionsPage({ onSelectCollection }) {
+function CollectionsPage({ user, onSelectCollection }) {
+  const STORAGE_KEY = `collectorsNotebook_collections_${user.uid}`;
   const [collections, setCollections] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingCollection, setEditingCollection] = useState(null);
@@ -14,7 +15,7 @@ function CollectionsPage({ onSelectCollection }) {
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) setCollections(JSON.parse(stored));
-  }, []);
+  }, [STORAGE_KEY]);
 
   useEffect(() => {
     if (!openMenuId) return;
@@ -116,9 +117,14 @@ function CollectionsPage({ onSelectCollection }) {
     <div className={styles.page}>
       <header className={styles.header}>
         <h1 className={styles.title}>Collector's Notebook</h1>
-        <button className={styles.addButton} onClick={openAddModal}>
-          Add New Collection
-        </button>
+        <div className={styles.headerActions}>
+          <button className={styles.addButton} onClick={openAddModal}>
+            Add New Collection
+          </button>
+          <button className={styles.logoutButton} onClick={() => signOut(auth)}>
+            Sign Out
+          </button>
+        </div>
       </header>
 
       <main className={styles.main}>

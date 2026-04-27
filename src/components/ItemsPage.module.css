@@ -221,6 +221,18 @@
   position: relative;
   border: 2px solid transparent;
   transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+
+/* ── Card Thumbnail ── */
+.cardThumbnail {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  align-self: center;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
 }
 
 /* ── Checkbox ── */
@@ -453,6 +465,73 @@
   min-height: 90px;
 }
 
+/* ── Image Upload (Modal) ── */
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.imageLabel {
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.fileInputLabel {
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  background: #f0f7f0;
+  border: 1.5px solid #4a9e58;
+  border-radius: 8px;
+  color: #1d4f1e;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s;
+  align-self: flex-start;
+}
+
+.fileInputLabel:hover {
+  background-color: #dff0df;
+}
+
+.fileInput {
+  display: none;
+}
+
+.imagePreviewWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.imagePreview {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid #ddd;
+  flex-shrink: 0;
+}
+
+.removeImageButton {
+  background: none;
+  border: 1.5px solid #c0392b;
+  color: #c0392b;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.removeImageButton:hover {
+  background-color: #fdf0ef;
+}
+
 .modalActions {
   display: flex;
   justify-content: flex-end;
@@ -491,6 +570,128 @@
 
 .saveButton:hover {
   background-color: #2a6b2c;
+}
+
+/* ── Item Detail Overlay ── */
+.detailPanel {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.28);
+  position: relative;
+}
+
+.detailClose {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background: rgba(0, 0, 0, 0.08);
+  border: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  z-index: 1;
+  transition: background-color 0.15s;
+  font-family: inherit;
+}
+
+.detailClose:hover {
+  background-color: rgba(0, 0, 0, 0.18);
+}
+
+.detailImage {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  border-radius: 16px 16px 0 0;
+  display: block;
+  flex-shrink: 0;
+  background-color: #f5f1eb;
+}
+
+.detailBody {
+  padding: 1.6rem 1.75rem 1.25rem;
+  flex: 1;
+}
+
+.detailName {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1d4f1e;
+  margin: 0 2.5rem 0.75rem 0;
+  word-break: break-word;
+}
+
+.detailDescription {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 1rem 0;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.detailMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.detailActions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.75rem 1.6rem;
+  border-top: 1px solid #f0ebe0;
+  margin-top: 0.25rem;
+}
+
+.detailEditButton {
+  flex: 1;
+  background-color: #1d4f1e;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.detailEditButton:hover {
+  background-color: #2a6b2c;
+}
+
+.detailDeleteButton {
+  flex: 1;
+  background: none;
+  border: 1.5px solid #c0392b;
+  color: #c0392b;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.detailDeleteButton:hover {
+  background-color: #fdf0ef;
 }
 
 /* ── Responsive ── */

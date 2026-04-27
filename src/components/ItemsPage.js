@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './ItemsPage.module.css';
 
 function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
@@ -7,10 +7,13 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
-  const [formData, setFormData] = useState({ name: '', description: '', price: '', status: 'uncollected' });
+  const [formData, setFormData] = useState({ name: '', description: '', price: '', status: 'uncollected', image: null });
   const [nameError, setNameError] = useState(false);
+  const [imageError, setImageError] = useState('');
   const [statusFilter, setStatusFilter] = useState(null);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
@@ -37,17 +40,41 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
 
   const openAddModal = () => {
     setEditingItem(null);
-    setFormData({ name: '', description: '', price: '', status: 'uncollected' });
+    setFormData({ name: '', description: '', price: '', status: 'uncollected', image: null });
     setNameError(false);
+    setImageError('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
     setShowModal(true);
   };
 
   const openEditModal = (item) => {
     setEditingItem(item);
-    setFormData({ name: item.name, description: item.description || '', price: item.price ?? '', status: item.status });
+    setFormData({ name: item.name, description: item.description || '', price: item.price ?? '', status: item.status, image: item.image || null });
     setNameError(false);
+    setImageError('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
     setShowModal(true);
     setOpenMenuId(null);
+    setSelectedItem(null);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      setImageError('Only JPG and PNG images are allowed.');
+      e.target.value = '';
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setImageError('Image must be under 2 MB.');
+      e.target.value = '';
+      return;
+    }
+    setImageError('');
+    const reader = new FileReader();
+    reader.onload = (ev) => setFormData((prev) => ({ ...prev, image: ev.target.result }));
+    reader.readAsDataURL(file);
   };
 
   const handleSave = () => {
@@ -60,7 +87,7 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
     if (editingItem) {
       updated = items.map((i) =>
         i.id === editingItem.id
-          ? { ...i, name: formData.name.trim(), description: formData.description.trim(), price: formData.price, status: formData.status }
+          ? { ...i, name: formData.name.trim(), description: formData.description.trim(), price: formData.price, status: formData.status, image: formData.image || null }
           : i
       );
     } else {
@@ -70,6 +97,7 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
         description: formData.description.trim(),
         price: formData.price,
         status: formData.status,
+        image: formData.image || null,
       };
       updated = [...items, newItem];
     }
@@ -168,7 +196,11 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
               <div
                 key={item.id}
                 className={[styles.card, openMenuId === item.id ? styles.cardMenuOpen : ''].filter(Boolean).join(' ')}
+                onClick={() => setSelectedItem(item)}
               >
+                {item.image && (
+                  <img src={item.image} alt={item.name} className={styles.cardThumbnail} />
+                )}
                 <input
                   type="checkbox"
                   className={styles.checkbox}
@@ -228,6 +260,35 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
         )}
       </main>
 
+      {selectedItem && (
+        <div className={styles.overlay} onClick={() => setSelectedItem(null)}>
+          <div className={styles.detailPanel} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.detailClose} onClick={() => setSelectedItem(null)}>×</button>
+            {selectedItem.image && (
+              <img src={selectedItem.image} alt={selectedItem.name} className={styles.detailImage} />
+            )}
+            <div className={styles.detailBody}>
+              <h2 className={styles.detailName}>{selectedItem.name}</h2>
+              {selectedItem.description && (
+                <p className={styles.detailDescription}>{selectedItem.description}</p>
+              )}
+              <div className={styles.detailMeta}>
+                {selectedItem.price !== '' && selectedItem.price != null && (
+                  <span className={styles.cardPrice}>${selectedItem.price}</span>
+                )}
+                <span className={[styles.cardStatus, selectedItem.status === 'collected' ? styles.statusCollected : styles.statusUncollected].join(' ')}>
+                  {selectedItem.status === 'collected' ? 'Collected' : 'Uncollected'}
+                </span>
+              </div>
+            </div>
+            <div className={styles.detailActions}>
+              <button className={styles.detailEditButton} onClick={() => openEditModal(selectedItem)}>Edit</button>
+              <button className={styles.detailDeleteButton} onClick={() => { handleDelete(selectedItem.id); setSelectedItem(null); }}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showModal && (
         <div className={styles.overlay} onClick={() => setShowModal(false)}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -260,6 +321,36 @@ function ItemsPage({ collection, user, onBack, onCollectionUpdated }) {
               step="0.01"
               onChange={(e) => setFormData({ ...formData, price: e.target.value })}
             />
+            <div className={styles.imageSection}>
+              <span className={styles.imageLabel}>Image (JPG or PNG, optional)</span>
+              {formData.image ? (
+                <div className={styles.imagePreviewWrapper}>
+                  <img src={formData.image} alt="Preview" className={styles.imagePreview} />
+                  <button
+                    type="button"
+                    className={styles.removeImageButton}
+                    onClick={() => {
+                      setFormData((prev) => ({ ...prev, image: null }));
+                      if (fileInputRef.current) fileInputRef.current.value = '';
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <label className={styles.fileInputLabel}>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png"
+                    className={styles.fileInput}
+                    onChange={handleImageChange}
+                  />
+                  Choose Image
+                </label>
+              )}
+              {imageError && <span className={styles.errorMsg}>{imageError}</span>}
+            </div>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}

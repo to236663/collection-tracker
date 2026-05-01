@@ -33,6 +33,7 @@ I would say that probably the biggest thing I learned from this project was the 
 
 ### Data Shapes
 Collection
+```
 {
   "id": "abc123",
   "name": "Vintage Stamps",
@@ -42,8 +43,9 @@ Collection
   "dateUpdated": "2025-03-15T12:00:00.000Z",
   "pinnedAt": null
 }
-
+```
 List
+```
 {
   "id": "xyz789",
   "name": "1952 Red Crown",
@@ -52,9 +54,9 @@ List
   "status": "collected",
   "image": "data:image/png;base64,..."
 }
-
+```
 ### Storage Layout
-
+```
 localStorage
 │
 ├── collectorsNotebook_collections_<uid>
@@ -71,3 +73,4 @@ localStorage
 │
 └── collectorsNotebook_items_<uid>_<collectionId> (repeated for each collection)
       └── Item[]
+```
